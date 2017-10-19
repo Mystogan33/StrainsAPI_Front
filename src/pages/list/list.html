@@ -37,6 +37,16 @@
   </ion-navbar>
 </ion-header>
 <ion-content [ngClass]="(!items.length)?'background-nocontent':'background'">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
 
     <ion-grid>
@@ -53,6 +63,9 @@
               <p>
                   Race : {{strain.content.race}}
               </p>
+              <button ion-button color="light" round item-end (click)="goDetails()">Détails</button>
+              <ion-icon *ngIf="strain.favorite == true" name="md-star" (click)="toggleFavorite(strain.favorite)" item-end></ion-icon>
+              <ion-icon *ngIf="strain.favorite == false" name="md-star-outline" (click)="toggleFavorite(strain.favorite)" item-end></ion-icon>
             </ion-item>
             <ion-card-content>
 
@@ -89,51 +102,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <!-- <ion-card *ngFor="let strain of items | paginate: { itemsPerPage: itemsPage, currentPage: p }" class="radius">
-      <ion-item color="secondary">
-        <ion-avatar item-start>
-          <img src="assets/img/weed.jpg"/>
-        </ion-avatar>
-        <h2>
-          {{strain.name}} #{{strain.content.id}}
-        </h2>
-        <p>
-            Race : {{strain.content.race}}
-        </p>
-      </ion-item>
-      <ion-card-content>
-
-        <ion-item-divider no-lines>Saveurs</ion-item-divider>
-
-        <ion-chip *ngFor="let flavor of strain.content.flavors">
-          <ion-icon name="md-leaf" color="savor"></ion-icon>
-          <ion-label>{{flavor}}</ion-label>
-        </ion-chip>
-
-        <ion-item-divider no-lines>Effets Bénéfiques</ion-item-divider>
-
-        <ion-chip *ngFor="let good of strain.content.effects.positive">
-          <ion-icon name="happy" color="secondary"></ion-icon>
-          <ion-label>{{good}}</ion-label>
-        </ion-chip>
-
-        <ion-item-divider no-lines>Effets Négatifs</ion-item-divider>
-
-        <ion-chip *ngFor="let bad of strain.content.effects.negative">
-          <ion-icon name="sad" color="danger"></ion-icon>
-          <ion-label>{{bad}}</ion-label>
-        </ion-chip>
-
-        <ion-item-divider no-lines>Effets Médicaux</ion-item-divider>
-
-        <ion-chip *ngFor="let med of strain.content.effects.medical">
-          <ion-icon name="medkit" color="primary"></ion-icon>
-          <ion-label>{{med}}</ion-label>
-        </ion-chip>
-
-      </ion-card-content>
-    </ion-card> -->
 
   </ion-list>
 

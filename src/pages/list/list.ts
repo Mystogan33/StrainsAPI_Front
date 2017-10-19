@@ -22,9 +22,14 @@ export class ListPage {
   isHybrid : boolean = true;
   isIndica : boolean = true;
 
+  isFavorite : boolean = true;
+  favorite : Array<any>;
+  bFavorite : boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public serv : StrainsApiProvider, public loadingCtrl : LoadingController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    this.favorite = JSON.parse(localStorage.getItem('favorites'));
 
   }
 
@@ -48,14 +53,28 @@ export class ListPage {
           this.DecodedStrains = Object.getOwnPropertyNames(this.response);
 
           for(let strain of this.DecodedStrains) {
-            this.cache.push({name: strain , content: this.response[strain]})
+
+            this.bFavorite = false;
+
+            for(var i = 0 ; i < this.favorite.length ; i++) {
+
+
+              if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
+                this.bFavorite = true;
+                alert("Match ! strain : "+strain+" / favoris : "+this.favorite[i]+" / this.bFavorite : "+this.bFavorite);
+              }
+
+            }
+
+            this.cache.push({name: strain , content: this.response[strain] , favorite : this.bFavorite})
+
           }
 
           this.refillList();
           this.filter();
 
-            loading.dismiss();
-            resolve(this.items);
+          loading.dismiss();
+          resolve(this.items);
 
         },
         (err)=>{
@@ -64,6 +83,10 @@ export class ListPage {
       );
 
     });
+  }
+
+  toggleFavorite(strain) {
+    strain = !strain;
   }
 
   getAllStrains() {
@@ -78,7 +101,20 @@ export class ListPage {
         this.DecodedStrains = Object.getOwnPropertyNames(this.response);
 
         for(let strain of this.DecodedStrains) {
-          this.cache.push({name: strain , content: this.response[strain]})
+
+          this.bFavorite = false;
+
+          for(var i = 0 ; i < this.favorite.length ; i++) {
+
+
+            if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
+              this.bFavorite = true;
+            }
+
+          }
+
+          this.cache.push({name: strain , content: this.response[strain] , favorite : this.bFavorite})
+
         }
 
         this.refillList();
@@ -149,6 +185,17 @@ export class ListPage {
     });
 
   }
+
+  doRefresh(refresher) {
+
+    this.getAllStrains();
+
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
+
+  }
+
 
   getItems(ev: any) {
 
