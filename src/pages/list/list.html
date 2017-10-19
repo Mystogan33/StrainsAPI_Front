@@ -1,23 +1,149 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>List</ion-title>
+  <ion-navbar color="secondary">
+    <ion-toolbar>
+      <button ion-button menuToggle item-start>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-searchbar (ionInput)="getItems($event)" mode="ios"></ion-searchbar>
+      <ion-buttons right>
+        <button ion-button icon-only (click)="toggleToolbar()">
+          <ion-icon name="options"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-toolbar *ngIf="isOptions" color="secondary">
+      <ion-item color="secondary" no-lines>
+        <ion-icon name="book" item-start></ion-icon>
+        Résultats par page :
+        <ion-badge item-end>{{itemsPage}}</ion-badge>
+      </ion-item>
+      <ion-range min="1" max="200" pin="true" [(ngModel)]="itemsPage">
+        <ion-label range-left>1</ion-label>
+        <ion-label range-right>200</ion-label>
+      </ion-range>
+      <ion-item color="secondary" class="font-white">
+        <ion-label>Sativa</ion-label>
+        <ion-toggle [(ngModel)]="isSativa" (click)="filter()"></ion-toggle>
+      </ion-item>
+      <ion-item color="secondary" class="font-white">
+        <ion-label>Hybrid</ion-label>
+        <ion-toggle [(ngModel)]="isHybrid" (click)="filter()"></ion-toggle>
+      </ion-item>
+      <ion-item color="secondary" class="font-white">
+        <ion-label>Indica</ion-label>
+        <ion-toggle [(ngModel)]="isIndica" (click)="filter()"></ion-toggle>
+      </ion-item>
+    </ion-toolbar>
   </ion-navbar>
 </ion-header>
-
-<ion-content>
+<ion-content [ngClass]="(!items.length)?'background-nocontent':'background'">
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let strain of items | paginate: { itemsPerPage: itemsPage, currentPage: p }" col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3>
+          <ion-card class="radius">
+            <ion-item color="secondary">
+              <ion-avatar item-start>
+                <img src="assets/img/weed.jpg"/>
+              </ion-avatar>
+              <h2>
+                {{strain.name}} #{{strain.content.id}}
+              </h2>
+              <p>
+                  Race : {{strain.content.race}}
+              </p>
+            </ion-item>
+            <ion-card-content>
+
+              <ion-item-divider no-lines>Saveurs</ion-item-divider>
+
+              <ion-chip *ngFor="let flavor of strain.content.flavors">
+                <ion-icon name="md-leaf" color="savor"></ion-icon>
+                <ion-label>{{flavor}}</ion-label>
+              </ion-chip>
+
+              <ion-item-divider no-lines>Effets Bénéfiques</ion-item-divider>
+
+              <ion-chip *ngFor="let good of strain.content.effects.positive">
+                <ion-icon name="happy" color="secondary"></ion-icon>
+                <ion-label>{{good}}</ion-label>
+              </ion-chip>
+
+              <ion-item-divider no-lines>Effets Négatifs</ion-item-divider>
+
+              <ion-chip *ngFor="let bad of strain.content.effects.negative">
+                <ion-icon name="sad" color="danger"></ion-icon>
+                <ion-label>{{bad}}</ion-label>
+              </ion-chip>
+
+              <ion-item-divider no-lines>Effets Médicaux</ion-item-divider>
+
+              <ion-chip *ngFor="let med of strain.content.effects.medical">
+                <ion-icon name="medkit" color="primary"></ion-icon>
+                <ion-label>{{med}}</ion-label>
+              </ion-chip>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- <ion-card *ngFor="let strain of items | paginate: { itemsPerPage: itemsPage, currentPage: p }" class="radius">
+      <ion-item color="secondary">
+        <ion-avatar item-start>
+          <img src="assets/img/weed.jpg"/>
+        </ion-avatar>
+        <h2>
+          {{strain.name}} #{{strain.content.id}}
+        </h2>
+        <p>
+            Race : {{strain.content.race}}
+        </p>
+      </ion-item>
+      <ion-card-content>
+
+        <ion-item-divider no-lines>Saveurs</ion-item-divider>
+
+        <ion-chip *ngFor="let flavor of strain.content.flavors">
+          <ion-icon name="md-leaf" color="savor"></ion-icon>
+          <ion-label>{{flavor}}</ion-label>
+        </ion-chip>
+
+        <ion-item-divider no-lines>Effets Bénéfiques</ion-item-divider>
+
+        <ion-chip *ngFor="let good of strain.content.effects.positive">
+          <ion-icon name="happy" color="secondary"></ion-icon>
+          <ion-label>{{good}}</ion-label>
+        </ion-chip>
+
+        <ion-item-divider no-lines>Effets Négatifs</ion-item-divider>
+
+        <ion-chip *ngFor="let bad of strain.content.effects.negative">
+          <ion-icon name="sad" color="danger"></ion-icon>
+          <ion-label>{{bad}}</ion-label>
+        </ion-chip>
+
+        <ion-item-divider no-lines>Effets Médicaux</ion-item-divider>
+
+        <ion-chip *ngFor="let med of strain.content.effects.medical">
+          <ion-icon name="medkit" color="primary"></ion-icon>
+          <ion-label>{{med}}</ion-label>
+        </ion-chip>
+
+      </ion-card-content>
+    </ion-card> -->
+
   </ion-list>
+
   <div *ngIf="selectedItem" padding>
     You navigated here from <b>{{selectedItem.title}}</b>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="secondary">
+    <pagination-controls previousLabel="" nextLabel="" autoHide="true" (pageChange)="p = $event"></pagination-controls>
+  </ion-toolbar>
+</ion-footer>

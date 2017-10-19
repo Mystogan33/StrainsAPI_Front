@@ -1,3 +1,51 @@
 page-list {
 
+  .background-nocontent {
+    background: url('../assets/img/nocontent.png') no-repeat center center fixed;
+    background-color: map-get($colors, 'light');
+  }
+
+  .background {
+    //background-color: map-get($colors, 'light');
+    background: url('../assets/img/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .radius {
+    border-radius: 13px;
+  }
+
+  ion-chip {
+    margin : 2px !important;
+  }
+
+  .range-md.range-has-pin {
+    padding-top: 0px;
+  }
+
+  .secondary {
+    background-color: map-get($colors, 'secondary');
+  }
+
+  .ngx-pagination {
+    text-align: center;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  
+
+
 }
+
+.loading-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  }
