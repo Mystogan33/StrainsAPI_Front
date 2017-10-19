@@ -33,17 +33,17 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      // let favorite = [];
+      // favorite.push("Afpak");
+      // favorite.push("Afwreck");
+      // favorite.push("Alchemy");
+      // localStorage.setItem('favorites' , JSON.stringify(favorite));
     });
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-     let favorite = [];
-     favorite.push("Afpak");
-     favorite.push("Alaska");
-     favorite.push("Afwreck");
-     localStorage.setItem('favorites' , JSON.stringify(favorite));
 
     this.nav.setRoot(page.component);
 

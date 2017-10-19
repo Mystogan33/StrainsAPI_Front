@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-navbar color="secondary">
-    <ion-toolbar>
+  <ion-navbar color="secondary" class="footerRound">
+    <ion-toolbar class="footerRound">
       <button ion-button menuToggle item-start>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -11,7 +11,7 @@
         </button>
       </ion-buttons>
     </ion-toolbar>
-    <ion-toolbar *ngIf="isOptions" color="secondary">
+    <ion-toolbar *ngIf="isOptions" color="secondary" class="footerRound">
       <ion-item color="secondary" no-lines>
         <ion-icon name="book" item-start></ion-icon>
         Résultats par page :
@@ -64,8 +64,8 @@
                   Race : {{strain.content.race}}
               </p>
               <button ion-button color="light" round item-end (click)="goDetails()">Détails</button>
-              <ion-icon *ngIf="strain.favorite == true" name="md-star" (click)="toggleFavorite(strain.favorite)" item-end></ion-icon>
-              <ion-icon *ngIf="strain.favorite == false" name="md-star-outline" (click)="toggleFavorite(strain.favorite)" item-end></ion-icon>
+              <ion-icon *ngIf="strain.favorite == true" name="md-star" (click)="toggleFavorite(strain)" item-end></ion-icon>
+              <ion-icon *ngIf="strain.favorite == false" name="md-star-outline" (click)="toggleFavorite(strain)" item-end></ion-icon>
             </ion-item>
             <ion-card-content>
 
@@ -90,7 +90,7 @@
                 <ion-label>{{bad}}</ion-label>
               </ion-chip>
 
-              <ion-item-divider no-lines>Effets Médicaux</ion-item-divider>
+              <ion-item-divider no-lines>Aide médicalement contre</ion-item-divider>
 
               <ion-chip *ngFor="let med of strain.content.effects.medical">
                 <ion-icon name="medkit" color="primary"></ion-icon>
@@ -110,8 +110,8 @@
   </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="secondary">
+<ion-footer class="footerRound">
+  <ion-toolbar color="secondary" class="footerRound">
     <pagination-controls previousLabel="" nextLabel="" autoHide="true" (pageChange)="p = $event"></pagination-controls>
   </ion-toolbar>
 </ion-footer>

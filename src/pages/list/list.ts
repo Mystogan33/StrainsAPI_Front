@@ -61,7 +61,6 @@ export class ListPage {
 
               if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
                 this.bFavorite = true;
-                alert("Match ! strain : "+strain+" / favoris : "+this.favorite[i]+" / this.bFavorite : "+this.bFavorite);
               }
 
             }
@@ -86,7 +85,22 @@ export class ListPage {
   }
 
   toggleFavorite(strain) {
-    strain = !strain;
+
+    if(strain.favorite == true) {
+
+       this.favorite = this.favorite.filter((item) => {
+        return (item.toLowerCase().indexOf(strain.name.toLowerCase()) < 0);
+      });
+
+      localStorage.setItem('favorites', JSON.stringify(this.favorite));
+
+    } else {
+      this.favorite.push(strain.name);
+      localStorage.setItem('favorites' , JSON.stringify(this.favorite));
+    }
+
+    strain.favorite = !strain.favorite;
+
   }
 
   getAllStrains() {
@@ -136,46 +150,35 @@ export class ListPage {
     this.isOptions = !this.isOptions;
   }
 
+  filterRace(race) {
+
+    let buffer: Array<any> = [];
+
+    buffer = this.cache.filter((item) => {
+      return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
+    });
+
+    buffer.forEach((item) => {
+      this.items.push(item);
+    });
+
+  }
+
   filter() {
 
     let race: string;
-    let buffer: Array<any> = [];
     this.items = [];
 
     if(this.isHybrid == true) {
       race = "hybrid";
-      buffer = this.cache.filter((item) => {
-        return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
-      });
-
-      buffer.forEach((item) => {
-        this.items.push(item);
-      });
-
-    }
-
-    if(this.isSativa == true) {
+      this.filterRace(race);
+    } else if(this.isSativa == true) {
       race = "sativa";
-      buffer = this.cache.filter((item) => {
-        return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
-      });
+      this.filterRace(race);
 
-      buffer.forEach((item) => {
-        this.items.push(item);
-      });
-
-    }
-
-    if(this.isIndica == true) {
+    } else if(this.isIndica == true) {
       race = "indica";
-      buffer = this.cache.filter((item) => {
-        return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
-      });
-
-      buffer.forEach((item) => {
-        this.items.push(item);
-      });
-
+      this.filterRace(race);
     }
 
     this.items.sort((a,b) => {

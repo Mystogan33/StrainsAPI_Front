@@ -40,6 +40,14 @@ page-list {
     padding-right: 2px;
   }
 
+  .footerRound {
+    border-radius: 13px;
+  }
+
+  .has-refresher > .scroll-content {
+    border-top: none;
+  }
+
 }
 
 .loading-wrapper {
