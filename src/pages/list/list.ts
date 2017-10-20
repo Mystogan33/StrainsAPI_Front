@@ -24,12 +24,14 @@ export class ListPage {
 
   isFavorite : boolean = true;
   favorite : Array<any>;
+  flavorsList : Array<any>;
   bFavorite : boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public serv : StrainsApiProvider, public loadingCtrl : LoadingController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.favorite = JSON.parse(localStorage.getItem('favorites'));
+    this.flavorsList = ['indica','sativa','hybrid'];
 
   }
 
@@ -69,7 +71,6 @@ export class ListPage {
 
           }
 
-          this.refillList();
           this.filter();
 
           loading.dismiss();
@@ -88,7 +89,7 @@ export class ListPage {
 
     if(strain.favorite == true) {
 
-       this.favorite = this.favorite.filter((item) => {
+      this.favorite = this.favorite.filter((item) => {
         return (item.toLowerCase().indexOf(strain.name.toLowerCase()) < 0);
       });
 
@@ -129,10 +130,9 @@ export class ListPage {
 
           this.cache.push({name: strain , content: this.response[strain] , favorite : this.bFavorite})
 
-        }
+          this.filter();
 
-        this.refillList();
-        this.filter();
+        }
 
       },
       (err)=>{
@@ -150,40 +150,65 @@ export class ListPage {
     this.isOptions = !this.isOptions;
   }
 
-  filterRace(race) {
-
-    let buffer: Array<any> = [];
-
-    buffer = this.cache.filter((item) => {
-      return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
-    });
-
-    buffer.forEach((item) => {
-      this.items.push(item);
-    });
-
-  }
-
   filter() {
 
-    let race: string;
-    this.items = [];
+    return new Promise((resolve, reject) => {
+      let buffer: Array<any> = [];
+      let race;
+      let x;
 
-    if(this.isHybrid == true) {
-      race = "hybrid";
-      this.filterRace(race);
-    } else if(this.isSativa == true) {
-      race = "sativa";
-      this.filterRace(race);
+      this.refillList();
 
-    } else if(this.isIndica == true) {
-      race = "indica";
-      this.filterRace(race);
-    }
+      if(this.isSativa == true) {
 
-    this.items.sort((a,b) => {
+        race = "sativa";
+        x = this.cache.filter((item) => {
+          return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
+        });
 
-      return a.content.id - b.content.id;
+        x.forEach((item) => {
+          buffer.push(item);
+        });
+
+      }
+
+      if(this.isHybrid == true) {
+
+        race = "hybrid";
+        x = this.cache.filter((item) => {
+          return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
+        });
+
+        x.forEach((item) => {
+          buffer.push(item);
+        });
+      };
+
+      if(this.isIndica == true) {
+
+        race = "indica"
+        x = this.cache.filter((item) => {
+          return (item.content.race.toLowerCase().indexOf(race.toLowerCase()) > -1);
+        });
+
+        x.forEach((item) => {
+          buffer.push(item);
+        });
+
+      }
+
+      this.items = [];
+      buffer.forEach((item) => {
+        this.items.push(item);
+      });
+
+      this.items.sort((a,b) => {
+
+        return a.content.id - b.content.id;
+
+      });
+
+      resolve(this.items);
 
     });
 
@@ -202,7 +227,6 @@ export class ListPage {
 
   getItems(ev: any) {
 
-    this.refillList();
     this.filter();
 
     // set val to the value of the searchbar
