@@ -20,6 +20,27 @@ page-list {
     border-radius: 13px;
   }
 
+  .item-md {
+    padding-left: 10px;
+}
+
+  .noPadding {
+    padding: 0;
+    padding-left : 10px;
+  }
+
+  .header-ios .toolbar-ios:last-child .toolbar-background-ios {
+    border-width: 0;
+    }
+
+  .noMarging {
+    margin: 0px;
+  }
+
+  .itemGroup {
+      margin: 13px 0px 13px 0px;
+    }
+
   ion-chip {
     margin : 2px !important;
   }
@@ -30,6 +51,12 @@ page-list {
 
   .pad7 {
     padding-top: 7px;
+  }
+
+  .item-divider-ios {
+    padding-left: 16px;
+    color: #222;
+    background-color: white;
   }
 
   .secondary {
