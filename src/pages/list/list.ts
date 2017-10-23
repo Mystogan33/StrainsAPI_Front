@@ -26,11 +26,12 @@ export class ListPage {
   favorite : Array<any>;
   flavorsList : Array<any>;
   bFavorite : boolean;
+  favoriteEnable : boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public serv : StrainsApiProvider, public loadingCtrl : LoadingController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
-    this.favorite = JSON.parse(localStorage.getItem('favorites'));
+    this.initFavorite();
     this.flavorsList = ['indica','sativa','hybrid'];
 
   }
@@ -58,13 +59,16 @@ export class ListPage {
 
             this.bFavorite = false;
 
-            for(var i = 0 ; i < this.favorite.length ; i++) {
+            if(this.favorite.length != 0) {
+
+              for(var i = 0 ; i < this.favorite.length ; i++) {
 
 
-              if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
-                this.bFavorite = true;
+                if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
+                  this.bFavorite = true;
+                }
+
               }
-
             }
 
             this.cache.push({name: strain , content: this.response[strain] , favorite : this.bFavorite})
@@ -83,6 +87,17 @@ export class ListPage {
       );
 
     });
+  }
+
+  initFavorite() {
+
+    var favoris = JSON.parse(localStorage.getItem('favorites'));
+    if(favoris != null) {
+      this.favorite = favoris;
+    } else {
+      this.favorite = [];
+    }
+
   }
 
   toggleFavorite(strain) {
@@ -119,11 +134,15 @@ export class ListPage {
 
           this.bFavorite = false;
 
-          for(var i = 0 ; i < this.favorite.length ; i++) {
+          if(this.favorite.length != 0) {
+
+            for(var i = 0 ; i < this.favorite.length ; i++) {
 
 
-            if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
-              this.bFavorite = true;
+              if(strain.toLowerCase().trim() == this.favorite[i].toLowerCase().trim()) {
+                this.bFavorite = true;
+              }
+
             }
 
           }

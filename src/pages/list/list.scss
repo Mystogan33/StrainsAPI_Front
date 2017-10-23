@@ -63,6 +63,10 @@ page-list {
     background-color: map-get($colors, 'secondary');
   }
 
+  .alignCenter {
+    text-align: center;
+  }
+
   .ngx-pagination {
     text-align: center;
     margin-left: 0;
