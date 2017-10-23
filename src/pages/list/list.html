@@ -17,15 +17,17 @@
 
       <ion-grid>
         <ion-row>
-          <ion-col col-6>
-            <ion-item color="secondary" no-lines class="alignCenter">
-              <ion-badge color="secondary"> {{itemsPage}} strains per page</ion-badge>
-            </ion-item>
+          <ion-col col-6 no-lines class="alignCenter">
+            <ion-chip #chip1>
+              <ion-icon name="bookmark" color="primary"></ion-icon>
+              <ion-label>{{itemsPage}} strains per page</ion-label>
+            </ion-chip>
           </ion-col>
-          <ion-col col-6>
-            <ion-item color="secondary" no-lines class="alignCenter">
-              <ion-badge color="secondary">{{items.length}} strains</ion-badge>
-            </ion-item>
+          <ion-col col-6 no-lines class="alignCenter">
+              <ion-chip #chip2>
+                <ion-icon name="bookmarks" color="primary"></ion-icon>
+                <ion-label>{{items.length}} strains</ion-label>
+              </ion-chip>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -97,34 +99,34 @@
             <p>
               Race : {{strain.content.race}}
             </p>
-            <button ion-button color="light" round item-end (click)="goDetails()">Détails</button>
+            <button ion-button color="light" round item-end (click)="goDetails()">Details</button>
             <ion-icon *ngIf="strain.favorite == true" name="md-star" (click)="toggleFavorite(strain)" item-end></ion-icon>
             <ion-icon *ngIf="strain.favorite == false" name="md-star-outline" (click)="toggleFavorite(strain)" item-end></ion-icon>
           </ion-item>
           <ion-card-content>
 
-            <ion-item-divider no-lines>Saveurs</ion-item-divider>
+            <ion-item-divider no-lines>Flavors</ion-item-divider>
 
             <ion-chip *ngFor="let flavor of strain.content.flavors">
               <ion-icon name="md-leaf" color="savor"></ion-icon>
               <ion-label>{{flavor}}</ion-label>
             </ion-chip>
 
-            <ion-item-divider no-lines>Effets Bénéfiques</ion-item-divider>
+            <ion-item-divider no-lines>Benefits</ion-item-divider>
 
             <ion-chip *ngFor="let good of strain.content.effects.positive">
               <ion-icon name="happy" color="secondary"></ion-icon>
               <ion-label>{{good}}</ion-label>
             </ion-chip>
 
-            <ion-item-divider no-lines>Effets Négatifs</ion-item-divider>
+            <ion-item-divider no-lines>Negative effects</ion-item-divider>
 
             <ion-chip *ngFor="let bad of strain.content.effects.negative">
               <ion-icon name="sad" color="danger"></ion-icon>
               <ion-label>{{bad}}</ion-label>
             </ion-chip>
 
-            <ion-item-divider no-lines>Aide médicalement contre</ion-item-divider>
+            <ion-item-divider no-lines>Medical treatment against</ion-item-divider>
 
             <ion-chip *ngFor="let med of strain.content.effects.medical">
               <ion-icon name="medkit" color="primary"></ion-icon>
@@ -142,12 +144,24 @@
 <ion-fab right bottom>
   <button ion-fab color="secondary"><ion-icon name="options"></ion-icon></button>
   <ion-fab-list side="top">
-    <button ion-fab (click)="toggleToolbar()" color="secondary"><ion-icon name="settings"></ion-icon></button>
-    <button ion-fab (click)="favoriteEnable = !favoriteEnable" color="secondary">
+    <button ion-fab color="primary">
+      <ion-icon color="light" name="medkit"></ion-icon>
+    </button>
+    <button ion-fab color="danger">
+      <ion-icon color="light" name="sad"></ion-icon>
+    </button>
+    <button ion-fab color="secondary">
+      <ion-icon color="light" name="happy"></ion-icon>
+    </button>
+  </ion-fab-list>
+  <ion-fab-list side="left">
+    <button ion-fab (click)="toggleOnlyFavorite()" color="secondary">
       <ion-icon *ngIf="favoriteEnable" color="light" name="star"></ion-icon>
       <ion-icon *ngIf="!favoriteEnable" color="light" name="star-outline"></ion-icon>
     </button>
-    <button ion-fab (click)="toggleToolbar()" color="secondary"><ion-icon name="funnel"></ion-icon></button>
+    <button ion-fab color="savor">
+      <ion-icon color="light" name="md-leaf"></ion-icon>
+    </button>
   </ion-fab-list>
 </ion-fab>
 

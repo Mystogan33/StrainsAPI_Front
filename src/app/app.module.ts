@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -15,7 +14,6 @@ import { StrainsApiProvider } from '../providers/strains-api/strains-api';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     ListPage
   ],
   imports: [
@@ -27,7 +25,6 @@ import { StrainsApiProvider } from '../providers/strains-api/strains-api';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     ListPage
   ],
   providers: [

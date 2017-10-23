@@ -28,6 +28,8 @@ export class ListPage {
   bFavorite : boolean;
   favoriteEnable : boolean = false;
 
+  loading : any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public serv : StrainsApiProvider, public loadingCtrl : LoadingController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
@@ -38,14 +40,14 @@ export class ListPage {
 
   ionViewCanEnter() {
 
+    this.loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `<img src="assets/img/loading.gif">`
+    });
+
+    this.loading.present();
+
     return new Promise((resolve, reject) => {
-
-      let loading = this.loadingCtrl.create({
-        spinner: 'hide',
-        content: `<img src="assets/img/loading.gif">`
-      });
-
-      loading.present();
 
       this.cache = [];
 
@@ -77,7 +79,7 @@ export class ListPage {
 
           this.filter();
 
-          loading.dismiss();
+          this.loading.dismiss();
           resolve(this.items);
 
         },
@@ -221,6 +223,8 @@ export class ListPage {
         this.items.push(item);
       });
 
+      this.filterOnlyFavorite();
+
       this.items.sort((a,b) => {
 
         return a.content.id - b.content.id;
@@ -243,6 +247,34 @@ export class ListPage {
 
   }
 
+  toggleOnlyFavorite() {
+
+    this.favoriteEnable = !this.favoriteEnable;
+    this.filter();
+  }
+
+  filterOnlyFavorite() {
+    
+    var x = [];
+
+    if(this.favoriteEnable == true) {
+
+      this.items.forEach((item) => {
+        if(item.favorite == true) {
+
+          x.push(item);
+
+        }
+      });
+
+      this.items = [];
+
+      x.forEach((item) => {
+        this.items.push(item);
+      });
+
+    }
+  }
 
   getItems(ev: any) {
 
