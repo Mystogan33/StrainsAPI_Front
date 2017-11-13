@@ -1,21 +1,29 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+Strains API : Know more about the differents strains of weed in the world !
 
-## How to use this template
+## How to make the app works !
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+### Install Ionic Cordova:
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
-
-### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+To build and to make work the app , use the following commands below (add `sudo` for linux users) :
 
 ```bash
-$ sudo npm install -g ionic cordova
-$ ionic start mySideMenu sidemenu
+$ (sudo) npm i -g ionic cordova
+$ (sudo) npm i
 ```
 
-Then, to run it, cd into `mySideMenu` and run:
+To run it in browser mode :
+
+```bash
+$ ionic serve `--consolelogs` (for dev purpose)
+```
+
+Then , to run it in mobile lab mode :
+
+```bash
+$ ionic serve --lab `--consolelogs` (for dev purpose)
+```
+
+Then , to build & run it on android emulator or real device for iOS :
 
 ```bash
 $ ionic cordova platform add ios
