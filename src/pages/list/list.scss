@@ -1,15 +1,21 @@
 page-list {
 
+  background-color: #F0F0F2;
+
   .background-nocontent {
     background: url('../assets/img/nocontent.png') no-repeat center center fixed;
-    background-color: map-get($colors, 'light');
   }
 
   .background {
     //background-color: map-get($colors, 'light');
-    background: url('../assets/img/background.jpg') no-repeat center center fixed;
+    background: url('../assets/img/wallpaper.png') no-repeat center center fixed;
     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover; /* version standardisée */
+  }
+
+  .scroll-content {
+    overflow-x: auto;
+    overflow-y: auto;
   }
 
   .flex {

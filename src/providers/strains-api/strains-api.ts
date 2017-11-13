@@ -9,15 +9,6 @@ export class StrainsApiProvider {
   private apiKey : any = "wIsOW7z";
 
   constructor(public http: Http) {
-    console.log('Hello StrainsApiProvider Provider');
-  }
-
-  getApiKey() {
-    return this.apiKey;
-  }
-
-  setApiKey(key) {
-    this.apiKey = key;
   }
 
   getAllStrains(): Observable<any> {
@@ -26,18 +17,13 @@ export class StrainsApiProvider {
     .map(res => res.json());
   }
 
-  getAllFlavors(): Observable<any> {
+  getAllEffects(): Observable<any> {
     return this.http.get('http://strainapi.evanbusse.com/'+this.apiKey+'/searchdata/effects')
     .map(res => res.json());
   }
 
-  getAllEffects(): Observable<any> {
+  getAllFlavors(): Observable<any> {
     return this.http.get('http://strainapi.evanbusse.com/'+this.apiKey+'/searchdata/flavors')
-    .map(res => res.json());
-  }
-
-  getHorairesPont() {
-    return this.http.get('http://localhost:8000')
     .map(res => res.json());
   }
 

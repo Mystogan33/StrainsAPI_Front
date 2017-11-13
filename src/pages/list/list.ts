@@ -16,30 +16,33 @@ export class ListPage {
   response: any;
   p: number = 1;
 
-  isOptions : any = false;
-  itemsPage : any = 20;
+  isOptions: any = false;
+  itemsPage: any = 20;
 
-  isSativa : boolean = true;
-  isHybrid : boolean = true;
-  isIndica : boolean = true;
+  isSativa: boolean = true;
+  isHybrid: boolean = true;
+  isIndica: boolean = true;
 
-  isFavorite : boolean = true;
-  favorite : Array<any>;
-  flavorsList : Array<any>;
-  bFavorite : boolean;
-  favoriteEnable : boolean = false;
+  isFavorite: boolean = true;
+  favorite: Array<any>;
+  flavorsList: Array<any>;
+  bFavorite: boolean;
+  favoriteEnable: boolean = false;
 
-  loading : any;
+  loading: any;
+
+  effects: any;
+  flavors: any;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     public serv : StrainsApiProvider, public loadingCtrl : LoadingController,
     public toastCtrl: ToastController , private iab: InAppBrowser) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+
     this.initFavorite();
     this.flavorsList = ['indica','sativa','hybrid'];
-
+    this.getAllEffects();
+    this.getAllFlavors();
   }
 
   ionViewCanEnter() {
@@ -301,6 +304,77 @@ export class ListPage {
     }
   }
 
+  getAllEffects() : any {
+
+    this.serv.getAllEffects()
+    .subscribe(
+      (data) => {
+
+        this.effects = data;
+
+      },
+      (err) => {
+        alert(err);
+      }
+    );
+
+  }
+
+  getPositiveEffects() {
+
+    let positive : Array<any> = [];
+    let filter : any = 'positive';
+
+    positive = this.effects.filter((effect) => {
+        return (effect.type.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+      })
+
+     alert(JSON.stringify(positive));
+
+  }
+
+  getNegativeEffects() {
+
+    let negative : Array<any> = [];
+    let filter = 'negative';
+
+    negative = this.effects.filter((effect) => {
+      return (effect.type.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+    })
+
+    alert(JSON.stringify(negative));
+
+  }
+
+  getMedicalEffects() {
+
+    let medical : Array<any> = [];
+    let filter = 'medical';
+
+    medical = this.effects.filter((effect) => {
+       return (effect.type.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+     })
+
+    alert(JSON.stringify(medical));
+
+  }
+
+  getAllFlavors() {
+
+    this.serv.getAllFlavors().subscribe(
+      (data) => {
+        this.flavors = data;
+      },
+      (err) => {
+
+      }
+    )
+  }
+
+  getFlavors() {
+    alert(JSON.stringify(this.flavors));
+  }
+
   getItems(ev: any) {
 
     this.filter();
@@ -318,10 +392,10 @@ export class ListPage {
 
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
-  }
+  // itemTapped(event, item) {
+  //   // That's right, we're pushing to ourselves!
+  //   this.navCtrl.push(ListPage, {
+  //     item: item
+  //   });
+  // }
 }

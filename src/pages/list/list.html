@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-navbar color="secondary" class="footerRound">
-    <ion-toolbar class="footerRound">
+  <ion-navbar color="secondary">
+    <ion-toolbar>
       <button ion-button menuToggle item-start>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -13,7 +13,7 @@
       </ion-buttons>
 
     </ion-toolbar>
-    <ion-toolbar *ngIf="isOptions" color="secondary" class="footerRound">
+    <ion-toolbar *ngIf="isOptions" color="secondary">
 
       <ion-grid>
         <ion-row>
@@ -72,7 +72,7 @@
 </ion-header>
 
 
-<ion-content [ngClass]="(!items.length)?'background-nocontent':'background'">
+<ion-content [ngClass]="(!items.length)? 'background-nocontent':'background'">
 
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
@@ -144,13 +144,13 @@
 <ion-fab right bottom>
   <button ion-fab color="secondary"><ion-icon name="options"></ion-icon></button>
   <ion-fab-list side="top">
-    <button ion-fab color="primary" (click)="notImplementedYet()">
+    <button ion-fab color="primary" (click)="getMedicalEffects()">
       <ion-icon color="light" name="medkit"></ion-icon>
     </button>
-    <button ion-fab color="danger" (click)="notImplementedYet()">
+    <button ion-fab color="danger" (click)="getNegativeEffects()">
       <ion-icon color="light" name="sad"></ion-icon>
     </button>
-    <button ion-fab color="secondary" (click)="notImplementedYet()">
+    <button ion-fab color="secondary" (click)="getPositiveEffects()">
       <ion-icon color="light" name="happy"></ion-icon>
     </button>
   </ion-fab-list>
@@ -159,7 +159,7 @@
       <ion-icon *ngIf="favoriteEnable" color="light" name="star"></ion-icon>
       <ion-icon *ngIf="!favoriteEnable" color="light" name="star-outline"></ion-icon>
     </button>
-    <button ion-fab color="savor" (click)="notImplementedYet()">
+    <button ion-fab color="savor" (click)="getFlavors()">
       <ion-icon color="light" name="md-leaf"></ion-icon>
     </button>
   </ion-fab-list>
@@ -167,8 +167,8 @@
 
 </ion-content>
 
-<ion-footer class="footerRound">
-  <ion-toolbar color="secondary" class="footerRound">
+<ion-footer *ngIf="items.length">
+  <ion-toolbar color="secondary">
     <pagination-controls previousLabel="" nextLabel="" autoHide="true" (pageChange)="p = $event"></pagination-controls>
   </ion-toolbar>
 </ion-footer>
