@@ -1,10 +1,11 @@
-Strains API : Know more about the differents strains of weed in the world !
+# StrainsAPI_Front
+  Know more about the differents strains of weed in the world !
 
 ## How to make the app works !
 
 ### Install Ionic Cordova:
 
-To build and to make work the app , use the following commands below (add `sudo` for linux users) :
+To build and to make work the app , use the following commands below in project repository (add `sudo` for linux users) :
 
 ```bash
 $ (sudo) npm i -g ionic cordova
@@ -31,5 +32,3 @@ $ ionic cordova run ios
 ```
 
 Substitute ios for android if not on a Mac.
-
-# StrainsAPI_Front
