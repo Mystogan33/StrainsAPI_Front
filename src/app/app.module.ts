@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { MyApp } from './app.component';
 import { ListPage } from '../pages/list/list';
@@ -31,7 +32,8 @@ import { StrainsApiProvider } from '../providers/strains-api/strains-api';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StrainsApiProvider
+    StrainsApiProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams , LoadingController } from 'ionic-angular';
+import { NavController, NavParams , LoadingController , ToastController } from 'ionic-angular';
 import { StrainsApiProvider } from '../../providers/strains-api/strains-api';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'page-list',
@@ -30,7 +31,10 @@ export class ListPage {
 
   loading : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public serv : StrainsApiProvider, public loadingCtrl : LoadingController) {
+  constructor(
+    public navCtrl: NavController, public navParams: NavParams,
+    public serv : StrainsApiProvider, public loadingCtrl : LoadingController,
+    public toastCtrl: ToastController , private iab: InAppBrowser) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.initFavorite();
@@ -89,6 +93,19 @@ export class ListPage {
       );
 
     });
+  }
+
+  goDetails(strainName : string , race : string) {
+
+    let splitName = strainName.split(" ");
+    let name = splitName[0];
+
+    for(var i = 1; i < splitName.length ; i++) {
+      name = name+'-'+splitName[i];
+    }
+
+    const browser = this.iab.create('https://www.leafly.com/'+race+'/'+name);
+
   }
 
   initFavorite() {
@@ -169,6 +186,14 @@ export class ListPage {
 
   toggleToolbar() {
     this.isOptions = !this.isOptions;
+  }
+
+  notImplementedYet() {
+    let toast = this.toastCtrl.create({
+      message: 'Not implemented yet',
+      duration: 2000
+    });
+    toast.present();
   }
 
   filter() {
@@ -254,7 +279,7 @@ export class ListPage {
   }
 
   filterOnlyFavorite() {
-    
+
     var x = [];
 
     if(this.favoriteEnable == true) {

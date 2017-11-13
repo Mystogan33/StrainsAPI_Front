@@ -99,7 +99,7 @@
             <p>
               Race : {{strain.content.race}}
             </p>
-            <button ion-button color="light" round item-end (click)="goDetails()">Details</button>
+            <button ion-button color="light" round item-end (click)="goDetails(strain.name, strain.content.race)">Details</button>
             <ion-icon *ngIf="strain.favorite == true" name="md-star" (click)="toggleFavorite(strain)" item-end></ion-icon>
             <ion-icon *ngIf="strain.favorite == false" name="md-star-outline" (click)="toggleFavorite(strain)" item-end></ion-icon>
           </ion-item>
@@ -144,13 +144,13 @@
 <ion-fab right bottom>
   <button ion-fab color="secondary"><ion-icon name="options"></ion-icon></button>
   <ion-fab-list side="top">
-    <button ion-fab color="primary">
+    <button ion-fab color="primary" (click)="notImplementedYet()">
       <ion-icon color="light" name="medkit"></ion-icon>
     </button>
-    <button ion-fab color="danger">
+    <button ion-fab color="danger" (click)="notImplementedYet()">
       <ion-icon color="light" name="sad"></ion-icon>
     </button>
-    <button ion-fab color="secondary">
+    <button ion-fab color="secondary" (click)="notImplementedYet()">
       <ion-icon color="light" name="happy"></ion-icon>
     </button>
   </ion-fab-list>
@@ -159,7 +159,7 @@
       <ion-icon *ngIf="favoriteEnable" color="light" name="star"></ion-icon>
       <ion-icon *ngIf="!favoriteEnable" color="light" name="star-outline"></ion-icon>
     </button>
-    <button ion-fab color="savor">
+    <button ion-fab color="savor" (click)="notImplementedYet()">
       <ion-icon color="light" name="md-leaf"></ion-icon>
     </button>
   </ion-fab-list>

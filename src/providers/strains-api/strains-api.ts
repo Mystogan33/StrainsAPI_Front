@@ -36,4 +36,9 @@ export class StrainsApiProvider {
     .map(res => res.json());
   }
 
+  getHorairesPont() {
+    return this.http.get('http://localhost:8000')
+    .map(res => res.json());
+  }
+
 }
